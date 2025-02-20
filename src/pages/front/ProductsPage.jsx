@@ -39,7 +39,6 @@ export default function ProductsPage () {
             qty: Number(qty)
           },
         });
-        closeModal();
       } catch (error) {
         alert("加入購物車失敗");
       } finally{
