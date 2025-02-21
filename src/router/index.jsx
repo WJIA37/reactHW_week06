@@ -18,24 +18,24 @@ const router = createHashRouter([
     children: [
       {
         path: '',
-        element: <HomePages />
+        element: <HomePages />,
       },
       {
         path: 'products',
-        element: <ProductsPage />
+        element: <ProductsPage />,
       },{
         path: 'products/:id',
-        element: <ProductsDetailPage />
+        element: <ProductsDetailPage />,
       },
       {
         path: 'cart',
-        element: <CartPage />
+        element: <CartPage />,
       },
-      {
-        path: 'adminLogin',
-        element: <AdminLoginPage />
-      }
-    ]
+    ],
+  },
+  {
+    path: 'adminLogin',
+    element: <AdminLoginPage />,
   },
   {
     path: '/admin/login',
@@ -53,12 +53,12 @@ const router = createHashRouter([
         path:'products',
         element:<AdminProductsPage />,
       }
-    ]
+    ],
   },
   {
     path: '*',
     element: <NotFound />
-  }
+  },
 ])
 
 export default router;

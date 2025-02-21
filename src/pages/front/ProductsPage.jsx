@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
 import ReactLoading from "react-loading";
-
-
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -22,7 +19,7 @@ export default function ProductsPage () {
         setProducts(res.data.products);
       } catch (error) {
         alert("取得產品失敗");
-      }finally{
+      } finally{
         setIsScreenLoading(false);//取得API之後關閉全螢幕loading狀態
       }
     };

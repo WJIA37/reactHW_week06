@@ -1,7 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Modal } from "bootstrap";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom"; 
+import ReactLoading from "react-loading";
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_PATH = import.meta.env.VITE_API_PATH;
 
@@ -25,10 +27,12 @@ const adminRoutes = [
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState([]);
+  const [isScreenLoading, setIsScreenLoading ] = useState(false);//預設全螢幕loading為關閉狀態
 
 
 
   const getProducts = async () => {
+    setIsScreenLoading(true);
     try {
       const res = await axios.get(
         `${BASE_URL}/v2/api/${API_PATH}/admin/products`
@@ -36,7 +40,9 @@ export default function AdminProductsPage() {
       setProducts(res.data.products);
     } catch (error) {
       alert("取得產品失敗");
-    }
+    } finally{
+      setIsScreenLoading(false);//取得API之後關閉全螢幕loading狀態
+    } 
   };
 
   const productModalRef = useRef(null);
@@ -52,6 +58,8 @@ export default function AdminProductsPage() {
   new Modal(delProductModalRef.current, {
     backdrop: false, //防止點擊Modal背景時關閉視窗
   });
+
+  getProducts();
 }, []);
 
 const handleOpenProductModal = (mode, product) => {
@@ -225,7 +233,6 @@ const handleOpenProductModal = (mode, product) => {
         </ul>
       </div>
       </nav>
-
 
       <div className="container py-5">
           <div className="row">
@@ -546,6 +553,19 @@ const handleOpenProductModal = (mode, product) => {
           </div>
         </div>
       </div>
+
+      { isScreenLoading && (
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{
+          position: "fixed",
+          inset: 0,
+          backgroundColor: "rgba(255,255,255,0.3)",
+          zIndex: 999,}}
+        >
+          <ReactLoading type="spin" color="black" width="4rem" height="4rem" />
+        </div>
+      )}
     </>
   )
 }
